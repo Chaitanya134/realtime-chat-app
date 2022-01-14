@@ -1,0 +1,122 @@
+.authentication {
+    @include flex($gap: 3rem, $col: true);
+    height: 100%;
+    background: #F3F3F3;
+    overflow: auto;
+
+    h1 {
+        font-size: 3rem;
+    }
+
+    .container {
+        height: fit-content;
+        width: 35%;
+        padding: 1.5rem;
+        background: white;
+        box-shadow: 0 0 10px 2px #ccc;
+
+        h1 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+    }
+
+    .form-group-wrapper {
+        margin-bottom: 0.8rem;
+    }
+
+    .form-group {
+        display: flex;
+        position: relative;
+
+        label {
+            position: absolute;
+            top: 50%;
+            left: 1rem;
+            margin: 0;
+            color: gray;
+            font-size: 1.1rem;
+            transform: translateY(-50%);
+            pointer-events: none;
+            transition: 0.15s ease-in;
+        }
+
+        input {
+            &.invalid {
+                border: 1.5px solid red !important;
+
+                &:focus+label,
+                &:not(:placeholder-shown)+label {
+                    color: red !important;
+                }
+            }
+
+            &:focus,
+            &:not(:placeholder-shown) {
+                outline: none;
+                border: 1.5px solid $primary-color;
+
+                &+label,
+                &+label {
+                    padding: 0px 4px;
+                    left: 0.5rem;
+                    font-size: 0.8rem;
+                    color: $primary-color;
+                    background: white;
+                    transform: translateY(-175%);
+                }
+            }
+
+        }
+    }
+
+    input {
+        height: 2.6rem;
+        padding: 2px 1rem;
+        font-size: 1.1rem;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        width: 48%;
+    }
+
+    .register-name-group,
+    .register-password-group {
+        @include flex(space-between);
+    }
+
+    .show-password-div {
+        @include flex ($pos: null, $gap: 0.5rem);
+        margin-bottom: 0.8rem;
+
+        input {
+            height: 1rem;
+            width: 1rem;
+            cursor: pointer;
+        }
+
+        label {
+            cursor: pointer;
+            letter-spacing: 0.4px;
+        }
+    }
+
+    .create-btn-div {
+        @include flex($pos: space-between);
+
+        p {
+            color: $primary-color;
+            font-weight: bold;
+            font-size: 0.95rem;
+            cursor: pointer;
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+    }
+
+    .register-help-text {
+        color: red;
+    }
+
+}

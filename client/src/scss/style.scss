@@ -1,0 +1,24 @@
+@import url('https://fonts.googleapis.com/css2?family=Oxygen&display=swap');
+
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body, #root {
+  height: 100%;
+  font-family: 'Oxygen', sans-serif;
+}
+
+// Variables
+@import "variables";
+
+// Helper classes
+@import "helper";
+
+// Mixins
+@import "mixins";
+
+// Login and Register Page
+@import "authentication";

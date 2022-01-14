@@ -1,0 +1,10 @@
+@mixin flex ($pos: center, $gap: null, $col: false) {
+    display: flex;
+    align-items: center;
+    justify-content: $pos;
+    gap: $gap;
+
+    @if $col {
+        flex-direction: column;
+    }
+}
