@@ -1,0 +1,35 @@
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.authentication {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #F3F3F3;
+}
+
+.container {
+  background: white;
+  box-shadow: 0 0 10px 2px #ccc;
+}
+
+.authentication label {
+  position: absolute;
+  margin: 0;
+}
+
+.authentication input {
+  border: 1px solid #ccc;
+}
+
+.authentication:focus {
+  outline: none;
+}
+
+.authentication .show-password-div label {
+  position: relative;
+  margin-left: 1rem;
+}
