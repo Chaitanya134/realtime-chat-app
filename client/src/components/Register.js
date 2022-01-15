@@ -1,8 +1,10 @@
 import React, { useState } from 'react'
 import axios from "axios";
+import { useNavigate } from 'react-router-dom';
 
 const Register = ({ setRegistered }) => {
 
+    const navigate = useNavigate();
     const [incorrectPassword, setIncorrectPassword] = useState(false);
 
     async function registerUser() {
@@ -39,7 +41,7 @@ const Register = ({ setRegistered }) => {
                 return;
             }
             document.getElementById("register-already-exists").style.display = "none";
-            setRegistered(true);
+            navigate("/chat", { replace: true });
         }
     }
 
@@ -148,7 +150,7 @@ const Register = ({ setRegistered }) => {
             </div>
             <div className='form-group-wrapper'>
                 <div className="phone-div form-group">
-                    <input type="tel" name="register-phone" id="register-phone" placeholder=' ' autoComplete="no" />
+                    <input type="tel" name="register-phone" id="register-phone" maxLength={10} placeholder=' ' autoComplete="no" />
                     <label htmlFor="register-phone">Phone Number</label>
                 </div>
                 <small id="register-help-phone" className='register-help-text'></small>

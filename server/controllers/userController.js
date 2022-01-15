@@ -37,7 +37,11 @@ exports.createUser = async (req, res) => {
         })
     }
 
-    const user = await User.create(req.body);
+    const { password, ...body } = req.body;
+
+    const user = await User(body);
+    user.password = await user.generateHash(password);
+    await user.save();
 
     res.status(201).json({
         success: true,
@@ -61,4 +65,25 @@ exports.updateUser = async (req, res) => {
         success: true,
         user
     })
+}
+
+// Login User
+exports.loginUser = async (req, res) => {
+    try {
+        const user = await User.findOne({ email: req.body.email });
+
+        if (!user.validPassword(req.body.password, user.password)) {
+            return res.status(401).json({
+                success: false,
+                message: "Invalid email or password"
+            })
+        }
+
+        res.status(200).json({
+            success: true,
+            user
+        })
+    } catch (err) {
+        console.log(err);
+    }
 }

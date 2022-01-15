@@ -1,12 +1,15 @@
 import React from 'react'
-import axios from 'axios';
+import axios from 'axios'
+import { useNavigate } from 'react-router-dom';
 
 const Login = ({ setRegistered }) => {
 
+    const navigate = useNavigate();
+
     async function login() {
         try {
-            const email = document.getElementById("register-email").value;
-            const password = document.getElementById("register-password").value;
+            const email = document.getElementById("login-email").value;
+            const password = document.getElementById("login-password").value;
             const body = {
                 email,
                 password
@@ -58,6 +61,7 @@ const Login = ({ setRegistered }) => {
             const status = await login();
             if (status) {
                 document.getElementById("login-invalid").style.display = "none";
+                navigate("/chat", { replace: true });
             } else {
                 document.getElementById("login-invalid").style.display = "block";
             }

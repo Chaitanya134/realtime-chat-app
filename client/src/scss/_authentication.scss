@@ -49,16 +49,23 @@
             &.invalid {
                 border: 1.5px solid red !important;
 
-                &:focus+label,
-                &:not(:placeholder-shown)+label {
-                    color: red !important;
+                &:focus,
+                &:not(:placeholder-shown),
+                &:-webkit-autofill {
+                    font-size: 1.1rem;
+
+                    &+label {
+                        color: red !important;
+                    }
                 }
             }
 
             &:focus,
-            &:not(:placeholder-shown) {
+            &:not(:placeholder-shown),
+            &:-webkit-autofill {
                 outline: none;
                 border: 1.5px solid $primary-color;
+                font-size: 1.1rem;
 
                 &+label,
                 &+label {

@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const bcrypt = require("bcrypt");
 
 const userSchema = mongoose.Schema({
     firstName: {
@@ -29,7 +30,17 @@ const userSchema = mongoose.Schema({
     savedContacts: {
         type: Array,
         default: []
-    }    
+    }
 })
+
+// Hash the Password
+userSchema.methods.generateHash = async password => {
+    return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
+};
+
+// Check if Password is Valid
+userSchema.methods.validPassword = (password, hashPassword) => {
+    return bcrypt.compareSync(password, hashPassword);
+}
 
 module.exports = mongoose.model("User", userSchema);
