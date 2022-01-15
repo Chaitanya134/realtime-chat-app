@@ -15,6 +15,10 @@
         background: white;
         box-shadow: 0 0 10px 2px #ccc;
 
+        &.login {
+            width: 30%;
+        }
+
         h1 {
             font-size: 1.5rem;
             margin-bottom: 1rem;
@@ -115,7 +119,8 @@
         }
     }
 
-    .register-help-text {
+    .register-help-text,
+    .login-help-text {
         color: red;
     }
 
