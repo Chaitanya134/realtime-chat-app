@@ -1,10 +1,13 @@
 import React from 'react'
+import Sidebar from './Sidebar'
+import Chat from './Chat'
 
 const Main = () => {
     return (
-        <div>
-            HI
-        </div>
+        <main className='main-content'>
+            <Sidebar />
+            <Chat />
+        </main>
     )
 }
 

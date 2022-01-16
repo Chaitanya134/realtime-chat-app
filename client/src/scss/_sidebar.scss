@@ -1,0 +1,96 @@
+.sidebar-div {
+    .user {
+        @include flex;
+        height: 65%;
+        aspect-ratio: 1;
+        background-color: #ccc;
+        border: 1px solid #ccc;
+        border-radius: 50%;
+        overflow: hidden;
+        cursor: pointer;
+
+        .user-img {
+            font-size: 2.2rem;
+            color: white;
+            transform: translateY(0.4rem);
+        }
+    }
+}
+
+.sidebar-header {
+    @include flex(space-between);
+    height: 10%;
+    padding: 0px 20px;
+    background: $primary-color;
+
+    .actions {
+        @include flex($gap: 1.5rem);
+
+        &>svg {
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: white;
+        }
+    }
+
+}
+
+.sidebar-body {
+    @include flex($pos: null, $col: true);
+    height: calc(100% - 10%);
+    overflow: auto;
+
+    &>div {
+        @include flex($gap: 0.5rem);
+        height: 12%;
+        width: 100%;
+        padding: 0 20px;
+        border-bottom: 2px solid $primary-color;
+        cursor: pointer;
+    }
+
+    .user-wrapper {
+        min-width: 50px;
+
+        .user-img {
+            transform: translateY(0.5rem);
+        }
+    }
+
+    .conversation-name-wrapper {
+        @include flex(space-between);
+
+        .conversation-name {
+            font-size: 1.2rem;
+            font-weight: 400;
+        }
+
+        .conversation-time {
+            font-size: 0.9rem;
+        }
+    }
+
+    .recent-chat-wrapper {
+        @include flex(space-between, 0.5rem);
+
+        .recent-chat {
+            white-space: nowrap;
+            max-width: calc(500px - 120px);
+            text-overflow: ellipsis;
+            overflow: hidden;
+            font-size: 0.85rem;
+        }
+
+        .messages-number {
+            @include flex;
+            height: 1.2rem;
+            aspect-ratio: 1;
+            background: $primary-color;
+            border-radius: 50%;
+            color: white;
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+    }
+
+}

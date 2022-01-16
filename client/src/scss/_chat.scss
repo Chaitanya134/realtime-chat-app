@@ -1,0 +1,4 @@
+.chat-div {
+    @include flex($gap: 20px,$col: true);
+    font-size: 2rem;
+}
