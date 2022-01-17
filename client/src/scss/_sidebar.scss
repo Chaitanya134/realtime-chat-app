@@ -36,13 +36,15 @@
 }
 
 .sidebar-body {
+    position: relative;
     @include flex($pos: null, $col: true);
     height: calc(100% - 10%);
-    overflow: auto;
+    overflow-x: hidden;
+    overflow-y: auto;
 
     &>div {
         @include flex($gap: 0.5rem);
-        height: 12%;
+        height: 13%;
         width: 100%;
         padding: 0 20px;
         border-bottom: 2px solid $primary-color;
@@ -50,23 +52,30 @@
     }
 
     .user-wrapper {
-        min-width: 50px;
+        min-width: 53px;
 
         .user-img {
+            font-size: 2.4rem;
             transform: translateY(0.5rem);
         }
     }
 
+    .chat-wrapper {
+        max-width: 410px;
+    }
+
     .conversation-name-wrapper {
         @include flex(space-between);
+        align-items: baseline;
+        margin-bottom: 0.25rem;
 
         .conversation-name {
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             font-weight: 400;
         }
 
         .conversation-time {
-            font-size: 0.9rem;
+            font-size: 0.85rem;
         }
     }
 
@@ -78,19 +87,59 @@
             max-width: calc(500px - 120px);
             text-overflow: ellipsis;
             overflow: hidden;
-            font-size: 0.85rem;
+            font-size: 0.9rem;
         }
 
         .messages-number {
             @include flex;
-            height: 1.2rem;
-            aspect-ratio: 1;
+            height: 1.4rem;
+            // width: 1.4rem;
+            padding: 0.25rem 0.5rem;
             background: $primary-color;
-            border-radius: 50%;
+            border-radius: 100vw;
             color: white;
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             font-weight: bold;
         }
     }
 
+    .no-conversations {
+        @include flex($gap: 1rem,$col: true);
+        height: 100%;
+        border-bottom: none;
+        cursor: auto;
+        font-size: 1.5rem;
+
+        .btn {
+            border-radius: 100vw;
+        }
+    }
+
+    /*
+    &::before {
+        content: "";
+        position: absolute;
+        height: 300px;
+        aspect-ratio: 1;
+        border-radius: 100%;
+        top: 50px;
+        left: 0;
+        transform: translate(-20%, -50%);
+        background: rgb(185, 187, 252);
+        z-index: -1;
+    }
+
+    &::after {
+        content: "";
+        position: absolute;
+        height: 400px;
+        aspect-ratio: 1;
+        border-radius: 100%;
+        bottom: 50px;
+        right: 0;
+        transform: translate(20%, 10%);
+        background: rgb(182, 200, 248);
+        z-index: -1;
+    }
+    */
 }
