@@ -5,8 +5,8 @@
         @include flex;
         height: 65%;
         aspect-ratio: 1;
-        background-color: #ccc;
-        border: 1px solid #ccc;
+        background-color: $secondary-color;
+        border: 1px solid $secondary-color;
         border-radius: 50%;
         overflow: hidden;
         cursor: pointer;
@@ -26,12 +26,47 @@
     background: $primary-color;
 
     .actions {
+        position: relative;
         @include flex($gap: 1.5rem);
 
         &>svg {
             font-size: 1.5rem;
             cursor: pointer;
             color: white;
+        }
+
+        .dropdown {
+            display: none;
+            position: absolute;
+            right: 0;
+            top: 120%;
+            height: fit-content;
+            width: 182px;
+            background: white;
+            outline: none;
+            border-radius: 0.75rem;
+            box-shadow: 0 0 8px $secondary-color;
+            overflow: hidden;
+            z-index: 1;
+
+            &.show {
+                display: block;
+            }
+
+            & .dropdown-item {
+                padding: 0.55rem 1rem;
+                cursor: pointer;
+                transition: 0.2s ease-in-out;
+
+                &:hover {
+                    color: white;
+                    background: $secondary-color;
+                }
+
+                // &:not(:last-child) {
+                //     margin-bottom: 0.5rem;
+                // }
+            }
         }
     }
 
@@ -45,17 +80,31 @@
     overflow-x: hidden;
     overflow-y: auto;
 
+    &::-webkit-scrollbar {
+        width: 0.5rem;
+    }
+
+    &::-webkit-scrollbar-track {
+        background: $secondary-color;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background: $primary-color;
+        border-radius: 100vh;
+    }
+
     &>div {
         @include flex($gap: 0.5rem);
+        flex-shrink: 0;
         height: 13%;
         width: 100%;
         padding: 0 20px;
-        border-bottom: 2px solid $primary-color;
+        border-bottom: 1px solid $secondary-color;
         cursor: pointer;
     }
 
     .user-wrapper {
-        min-width: 53px;
+        min-width: 55px;
 
         .user-img {
             font-size: 2.4rem;
@@ -73,7 +122,7 @@
         margin-bottom: 0.25rem;
 
         .conversation-name {
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             font-weight: 400;
         }
 
@@ -86,8 +135,8 @@
         @include flex(space-between, 0.5rem);
 
         .recent-chat {
+            width: calc(500px - 120px);
             white-space: nowrap;
-            max-width: calc(500px - 120px);
             text-overflow: ellipsis;
             overflow: hidden;
             font-size: 0.9rem;
@@ -152,7 +201,7 @@
     inset: 0;
     transform: translateX(-100%);
     transition: 0.4s ease-in-out;
-    
+
     &.show {
         transform: translateX(0);
         box-shadow: 5px 0 10px #ccc;
@@ -161,5 +210,61 @@
     .actions span {
         font-size: 1.4rem;
         color: white;
+    }
+
+    .conversation-search-wrapper {
+        position: sticky;
+        top: 0;
+        border-bottom: 1px solid #ccc;
+        height: 7%;
+        background: $secondary-color;
+        cursor: auto;
+        z-index: 1;
+
+        .search-icon {
+            position: absolute;
+            font-size: 1.2rem;
+            left: 11%;
+            color: $primary-color;
+        }
+
+        input {
+            height: 75%;
+            width: 90%;
+            padding: 2px 2.2rem;
+            border: none;
+            outline: none;
+            border-radius: 100vw;
+            font-size: 1rem;
+        }
+    }
+
+    .group-img {
+        font-size: 2.5rem;
+        color: white;
+    }
+
+    .contact-name-initial {
+        font-size: 1.5rem;
+        color: $primary-color;
+        justify-content: flex-start;
+        cursor: auto;
+        height: 10%;
+    }
+
+    .about-user-wrapper {
+        .contact-name {
+            font-size: 1.2rem;
+            font-weight: 400;
+            margin-bottom: 0.25rem;
+        }
+
+        .about-user {
+            width: calc(500px - 100px);
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            font-size: 0.9rem;
+        }
     }
 }
