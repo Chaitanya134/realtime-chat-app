@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { FaUser } from "react-icons/fa"
 import { IoEllipsisVertical } from "react-icons/io5"
 import { RiMessage3Fill, RiCheckboxBlankCircleLine } from "react-icons/ri"
 import AddConversation from './AddConversation'
+import NewGroup from './NewGroup'
 
 const Sidebar = () => {
 
     const [showAddConversation, setShowAddConversation] = useState(false);
     const [showDropdown, setShowDropdown] = useState(false);
+    const [showNewGroup, setShowNewGroup] = useState(false);
 
     let conversations = [
         {
@@ -55,6 +58,7 @@ const Sidebar = () => {
     ];
 
     // conversations = [];
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (showDropdown) {
@@ -63,57 +67,61 @@ const Sidebar = () => {
     }, [showDropdown])
 
     return (
-            <div className='sidebar-div'>
-                <div className="sidebar-header">
-                    <div className="user">
-                        <FaUser className='user-img' />
-                    </div>
-                    <div className="actions">
-                        <RiCheckboxBlankCircleLine />
-                        <RiMessage3Fill title='Add Conversation' onClick={() => setShowAddConversation(true)} />
-                        <IoEllipsisVertical onClick={() => setShowDropdown(prev => !prev)} />
-                        <div tabIndex={1} className={"dropdown" + (showDropdown ? " show" : "")} onBlur={() => setShowDropdown(false)}>
-                            <div className="dropdown-item">New Group</div>
-                            <div className="dropdown-item">Add Contact</div>
-                            <div className="dropdown-item">Important Messages</div>
-                            <div className="dropdown-item">Log out</div>
-                        </div>
+        <div className='sidebar-div'>
+            <div className="sidebar-header">
+                <div className="user">
+                    <FaUser className='user-img' />
+                </div>
+                <div className="actions">
+                    <RiCheckboxBlankCircleLine />
+                    <RiMessage3Fill title='Add Conversation' onClick={() => { setShowAddConversation(true) }} />
+                    <IoEllipsisVertical onClick={() => setShowDropdown(prev => !prev)} />
+                    <div tabIndex={-1} className={"dropdown" + (showDropdown ? " show" : "")} onBlur={() => setShowDropdown(false)}>
+                        <div className="dropdown-item" onClick={() => {
+                            setShowNewGroup(true);
+                            setShowDropdown(false);
+                        }}>New Group</div>
+                        <div className="dropdown-item">Add Contact</div>
+                        <div className="dropdown-item">Important Messages</div>
+                        <div className="dropdown-item" onClick={() => navigate("/", { replace: true })}>Log out</div>
                     </div>
                 </div>
-                <div className="sidebar-body">
-                    {
-                        conversations.length > 0 ?
-                            conversations.map(conversation => (
-                                <div key={conversation.id}>
-                                    <div className="user-wrapper">
-                                        <div className="user">
-                                            <FaUser className="user-img" />
-                                        </div>
-                                    </div>
-                                    <div className="chat-wrapper">
-                                        <div className="conversation-name-wrapper">
-                                            <h3 className="conversation-name">{conversation.conversationName}</h3>
-                                            <span className="conversation-time">{conversation.lastMessageTime}</span>
-                                        </div>
-                                        <div className="recent-chat-wrapper">
-                                            <p className="recent-chat">{conversation.lastMessage}</p>
-                                            <div className="messages-number">
-                                                <span>{conversation.unseenMessages}</span>
-                                            </div>
-                                        </div>
+            </div>
+            <div className="sidebar-body">
+                {
+                    conversations.length > 0 ?
+                        conversations.map(conversation => (
+                            <div key={conversation.id}>
+                                <div className="user-wrapper">
+                                    <div className="user">
+                                        <FaUser className="user-img" />
                                     </div>
                                 </div>
-                            )) :
-                            <div className="no-conversations">
-                                <p>You have no conversations</p>
-                                <div className="btn" onClick={() => setShowAddConversation(true)}>
-                                    Create One
+                                <div className="chat-wrapper">
+                                    <div className="conversation-name-wrapper">
+                                        <h3 className="conversation-name">{conversation.conversationName}</h3>
+                                        <span className="conversation-time">{conversation.lastMessageTime}</span>
+                                    </div>
+                                    <div className="recent-chat-wrapper">
+                                        <p className="recent-chat">{conversation.lastMessage}</p>
+                                        <div className="messages-number">
+                                            <span>{conversation.unseenMessages}</span>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                    }
-                </div>
-                <AddConversation showAddConversation={showAddConversation} setShowAddConversation={setShowAddConversation} />
+                        )) :
+                        <div className="no-conversations">
+                            <p>You have no conversations</p>
+                            <div className="btn" onClick={() => setShowAddConversation(true)}>
+                                Create One
+                            </div>
+                        </div>
+                }
             </div>
+            <AddConversation showAddConversation={showAddConversation} setShowAddConversation={setShowAddConversation} setShowNewGroup={setShowNewGroup} />
+            <NewGroup showNewGroup={showNewGroup} setShowNewGroup={setShowNewGroup} />
+        </div>
     )
 }
 

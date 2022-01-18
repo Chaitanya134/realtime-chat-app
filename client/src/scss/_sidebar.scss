@@ -45,7 +45,7 @@
             background: white;
             outline: none;
             border-radius: 0.75rem;
-            box-shadow: 0 0 8px $secondary-color;
+            box-shadow: 0 0 8px 2px $secondary-color;
             overflow: hidden;
             z-index: 1;
 
@@ -155,7 +155,8 @@
         }
     }
 
-    .no-conversations {
+    .no-conversations,
+    .no-contacts {
         @include flex($gap: 1rem, $col: true);
         height: 100%;
         border-bottom: none;
@@ -165,6 +166,10 @@
         .btn {
             border-radius: 100vw;
         }
+    }
+
+    .no-contacts {
+        height: calc(100% - 7%);
     }
 
     /*
@@ -196,7 +201,8 @@
     */
 }
 
-.sidebar-div .add-conversation-div {
+.sidebar-div .add-conversation-div,
+.sidebar-div .new-group-div {
     position: absolute;
     inset: 0;
     transform: translateX(-100%);

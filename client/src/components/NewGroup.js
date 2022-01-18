@@ -3,7 +3,7 @@ import { FaUser, FaUserFriends } from "react-icons/fa"
 import { IoArrowBack } from "react-icons/io5"
 import { AiOutlineSearch } from "react-icons/ai"
 
-const AddConversation = ({ showAddConversation, setShowAddConversation, setShowNewGroup }) => {
+const NewGroup = ({ showNewGroup, setShowNewGroup }) => {
 
     const [contacts, setContacts] = useState([
         {
@@ -39,10 +39,6 @@ const AddConversation = ({ showAddConversation, setShowAddConversation, setShowN
     ]);
 
     let contactNameInitial = "";
-
-    // useEffect(() => {
-    //     setContacts([]);
-    // }, [])
 
     function addNameInitial(contactName) {
         if (contactNameInitial !== contactName[0].toUpperCase()) {
@@ -80,33 +76,20 @@ const AddConversation = ({ showAddConversation, setShowAddConversation, setShowN
     }
 
     return (
-        <div className={'add-conversation-div' + (showAddConversation ? " show" : "")}>
+        <div className={'new-group-div' + (showNewGroup ? " show" : "")}>
             <div className="sidebar-header">
                 <div className="actions">
-                    <IoArrowBack onClick={() => setShowAddConversation(false)} />
+                    <IoArrowBack onClick={() => setShowNewGroup(false)} />
                     <span>
-                        Add Conversation
+                        Create New Group
                     </span>
                 </div>
             </div>
             <div className="sidebar-body">
                 <div className='conversation-search-wrapper'>
                     <AiOutlineSearch className='search-icon' />
-                    <input type="text" placeholder='Search Contacts' onChange={searchContacts} />
+                    <input type="text" placeholder='Search Participants' onChange={searchContacts} />
                 </div>
-                {
-                    contacts.length > 0 && <div onClick={() => setShowNewGroup(true)}>
-                        <div className="user-wrapper">
-                            <div className="user">
-                                <FaUserFriends className="group-img" />
-                            </div>
-                        </div>
-                        <div className="about-user-wrapper">
-                            <h3 className='contact-name'>New Group</h3>
-                            <p className='about-user'>Add Participants</p>
-                        </div>
-                    </div>
-                }
                 {
                     contacts.length > 0 ?
                         contacts.sort((a, b) => a.contactName.localeCompare(b.contactName))
@@ -130,7 +113,7 @@ const AddConversation = ({ showAddConversation, setShowAddConversation, setShowN
                             }) :
                         <div className="no-contacts">
                             <p>You have no contacts</p>
-                            <div className="btn" onClick={() => setShowAddConversation(true)}>
+                            <div className="btn" onClick={() => setShowNewGroup(true)}>
                                 Add Contact
                             </div>
                         </div>
@@ -141,4 +124,4 @@ const AddConversation = ({ showAddConversation, setShowAddConversation, setShowN
     )
 }
 
-export default AddConversation
+export default NewGroup
