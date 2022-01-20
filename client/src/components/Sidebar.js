@@ -5,12 +5,17 @@ import { IoEllipsisVertical } from "react-icons/io5"
 import { RiMessage3Fill, RiCheckboxBlankCircleLine } from "react-icons/ri"
 import AddConversation from './AddConversation'
 import NewGroup from './NewGroup'
+import AddContact from './AddContact'
+import { useConversations } from '../contexts/ConversationProvider'
 
 const Sidebar = () => {
 
     const [showAddConversation, setShowAddConversation] = useState(false);
     const [showDropdown, setShowDropdown] = useState(false);
     const [showNewGroup, setShowNewGroup] = useState(false);
+    const [showAddContact, setShowAddContact] = useState(false);
+
+    const { setConversation } = useConversations();
 
     let conversations = [
         {
@@ -81,7 +86,10 @@ const Sidebar = () => {
                             setShowNewGroup(true);
                             setShowDropdown(false);
                         }}>New Group</div>
-                        <div className="dropdown-item">Add Contact</div>
+                        <div className="dropdown-item" onClick={() => {
+                            setShowAddContact(true);
+                            setShowDropdown(false);
+                        }}>Add Contact</div>
                         <div className="dropdown-item">Important Messages</div>
                         <div className="dropdown-item" onClick={() => navigate("/", { replace: true })}>Log out</div>
                     </div>
@@ -91,7 +99,7 @@ const Sidebar = () => {
                 {
                     conversations.length > 0 ?
                         conversations.map(conversation => (
-                            <div key={conversation.id}>
+                            <div key={conversation.id} onClick={() => setConversation(conversation)}>
                                 <div className="user-wrapper">
                                     <div className="user">
                                         <FaUser className="user-img" />
@@ -119,8 +127,18 @@ const Sidebar = () => {
                         </div>
                 }
             </div>
-            <AddConversation showAddConversation={showAddConversation} setShowAddConversation={setShowAddConversation} setShowNewGroup={setShowNewGroup} />
-            <NewGroup showNewGroup={showNewGroup} setShowNewGroup={setShowNewGroup} />
+            <AddConversation
+                showAddConversation={showAddConversation}
+                setShowAddConversation={setShowAddConversation}
+                setShowNewGroup={setShowNewGroup}
+                setShowAddContact={setShowAddContact}
+            />
+            <NewGroup
+                showNewGroup={showNewGroup}
+                setShowNewGroup={setShowNewGroup}
+                setShowAddContact={setShowAddContact}
+            />
+            <AddContact showAddContact={showAddContact} setShowAddContact={setShowAddContact} />
         </div>
     )
 }

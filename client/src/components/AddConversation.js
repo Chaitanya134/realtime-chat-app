@@ -2,41 +2,46 @@ import React, { useState, useEffect } from 'react'
 import { FaUser, FaUserFriends } from "react-icons/fa"
 import { IoArrowBack } from "react-icons/io5"
 import { AiOutlineSearch } from "react-icons/ai"
+import { useContacts } from '../contexts/ContactProvider'
+import { useConversations } from '../contexts/ConversationProvider'
 
-const AddConversation = ({ showAddConversation, setShowAddConversation, setShowNewGroup }) => {
+const AddConversation = ({ showAddConversation, setShowAddConversation, setShowNewGroup, setShowAddContact }) => {
 
-    const [contacts, setContacts] = useState([
-        {
-            id: 1,
-            contactName: "Chaitanya",
-            aboutUser: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem, repellat."
-        },
-        {
-            id: 2,
-            contactName: "Aakash",
-            aboutUser: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem, repellat."
-        },
-        {
-            id: 3,
-            contactName: "Ajay",
-            aboutUser: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem, repellat."
-        },
-        {
-            id: 4,
-            contactName: "Chitrankshi",
-            aboutUser: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem, repellat."
-        },
-        {
-            id: 5,
-            contactName: "Tanishk",
-            aboutUser: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem, repellat."
-        },
-        {
-            id: 6,
-            contactName: "Rahul",
-            aboutUser: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem, repellat."
-        }
-    ]);
+    // const [contacts, setContacts] = useState([
+    //     {
+    //         id: 1,
+    //         contactName: "Chaitanya",
+    //         aboutUser: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem, repellat."
+    //     },
+    //     {
+    //         id: 2,
+    //         contactName: "Aakash",
+    //         aboutUser: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem, repellat."
+    //     },
+    //     {
+    //         id: 3,
+    //         contactName: "Ajay",
+    //         aboutUser: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem, repellat."
+    //     },
+    //     {
+    //         id: 4,
+    //         contactName: "Chitrankshi",
+    //         aboutUser: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem, repellat."
+    //     },
+    //     {
+    //         id: 5,
+    //         contactName: "Tanishk",
+    //         aboutUser: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem, repellat."
+    //     },
+    //     {
+    //         id: 6,
+    //         contactName: "Rahul",
+    //         aboutUser: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem, repellat."
+    //     }
+    // ]);
+
+    const { contacts, setContacts } = useContacts();
+    const { setConversation } = useConversations();
 
     let contactNameInitial = "";
 
@@ -71,7 +76,7 @@ const AddConversation = ({ showAddConversation, setShowAddConversation, setShowN
         document.querySelectorAll(".contact-name").forEach(nameDiv => {
             if (e.target.value === "") {
                 nameDiv.parentElement.parentElement.style.display = "flex";
-            } else if (nameDiv.innerText.includes(e.target.value)) {
+            } else if (nameDiv.innerText.toLowerCase().startsWith(e.target.value.toLowerCase())) {
                 nameDiv.parentElement.parentElement.style.display = "flex";
             } else {
                 nameDiv.parentElement.parentElement.style.display = "none";
@@ -114,7 +119,13 @@ const AddConversation = ({ showAddConversation, setShowAddConversation, setShowN
                                 return (
                                     <React.Fragment key={contact.id} >
                                         {addNameInitial(contact.contactName)}
-                                        <div>
+                                        <div onClick={() => {
+                                            const conversation = {
+                                                id: contact.id,
+                                                conversationName: contact.contactName,
+                                            }
+                                            setConversation(conversation);
+                                        }}>
                                             <div className="user-wrapper">
                                                 <div className="user">
                                                     <FaUser className="user-img" />
@@ -130,7 +141,7 @@ const AddConversation = ({ showAddConversation, setShowAddConversation, setShowN
                             }) :
                         <div className="no-contacts">
                             <p>You have no contacts</p>
-                            <div className="btn" onClick={() => setShowAddConversation(true)}>
+                            <div className="btn" onClick={() => setShowAddContact(true)}>
                                 Add Contact
                             </div>
                         </div>

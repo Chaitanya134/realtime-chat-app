@@ -59,8 +59,8 @@
                 transition: 0.2s ease-in-out;
 
                 &:hover {
-                    color: white;
-                    background: $secondary-color;
+                    // color: white;
+                    background: $selection-color;
                 }
 
                 // &:not(:last-child) {
@@ -250,6 +250,11 @@
         color: white;
     }
 
+    .participant {
+        transition: 0.2s ease-in-out;
+        background: $selection-color;
+    }
+
     .contact-name-initial {
         font-size: 1.5rem;
         color: $primary-color;
@@ -271,6 +276,112 @@
             text-overflow: ellipsis;
             overflow: hidden;
             font-size: 0.9rem;
+        }
+    }
+}
+
+.add-contact-div {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+
+    &.show {
+        @include flex;
+    }
+
+    .add-contact-wrapper {
+        background: white;
+        height: fit-content;
+        width: 30%;
+        border-radius: 10px;
+        box-shadow: 0 0 10px 2px #cdcdcd;
+
+        .add-contact-header {
+            @include flex($pos: null);
+            padding: 1.5rem;
+            height: 60px;
+            font-size: 1.4rem;
+            border-bottom: 1px solid #ccc;
+        }
+
+        .add-contact-body {
+            padding: 1rem 1.5rem;
+
+            .form-group-wrapper {
+                margin-bottom: 1rem;
+            }
+
+            .form-group {
+                display: flex;
+                position: relative;
+
+                label {
+                    position: absolute;
+                    top: 50%;
+                    left: 1rem;
+                    margin: 0;
+                    color: gray;
+                    font-size: 1.1rem;
+                    transform: translateY(-50%);
+                    pointer-events: none;
+                    transition: 0.15s ease-in;
+                }
+
+                input {
+                    &.invalid {
+                        border: 1.5px solid red !important;
+
+                        &:focus,
+                        &:not(:placeholder-shown),
+                        &:-webkit-autofill {
+                            font-size: 1.1rem;
+
+                            &+label {
+                                color: red !important;
+                            }
+                        }
+                    }
+
+                    &:focus,
+                    &:not(:placeholder-shown),
+                    &:-webkit-autofill {
+                        outline: none;
+                        border: 1.5px solid $primary-color;
+                        font-size: 1.1rem;
+
+                        &+label,
+                        &+label {
+                            padding: 0px 4px;
+                            left: 0.5rem;
+                            font-size: 0.8rem;
+                            color: $primary-color;
+                            background: white;
+                            transform: translateY(-175%);
+                        }
+                    }
+
+                }
+            }
+
+            input {
+                height: 2.6rem;
+                padding: 2px 1rem;
+                font-size: 1.1rem;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+                width: 48%;
+            }
+
+            .add-contact-help-text {
+                margin-top: 0.4rem;
+                color: red;
+            }
+
+        }
+
+        .add-contact-btn-wrapper {
+            @include flex($pos: flex-end, $gap: 1rem);
         }
     }
 }
