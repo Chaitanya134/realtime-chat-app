@@ -9,9 +9,9 @@
     }
 
     .chat-div {
-        flex: calc(100% - $sidebar-width);
+        width: calc(100% - $sidebar-width);
         height: 100%;
         overflow: auto;
-        background: #F9F9F9;
+        background: #fafafa;
     }
 }

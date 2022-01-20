@@ -3,8 +3,9 @@ import { FaUser } from "react-icons/fa"
 import { IoArrowBack } from "react-icons/io5"
 import { AiOutlineSearch } from "react-icons/ai"
 import { useContacts } from '../contexts/ContactProvider'
+import { useConversations } from '../contexts/ConversationProvider'
 
-const NewGroup = ({ showNewGroup, setShowNewGroup, setShowAddContact }) => {
+const NewGroup = ({ showNewGroup, setShowNewGroup, setShowAddContact, setShowAddConversation }) => {
 
     // const [contacts, setContacts] = useState([
     //     {
@@ -40,6 +41,9 @@ const NewGroup = ({ showNewGroup, setShowNewGroup, setShowAddContact }) => {
     // ]);
 
     const [groupParticipants, setGroupParticipants] = useState([]);
+    const [showNewGroupModal, setShowNewGroupModal] = useState(false);
+    const { contacts, setContacts } = useContacts();
+    const { conversations, setConversations } = useConversations();
 
     function addGroupParticipants(contact) {
         const { id: contactId } = contact;
@@ -49,14 +53,10 @@ const NewGroup = ({ showNewGroup, setShowNewGroup, setShowAddContact }) => {
             setGroupParticipants(groupParticipants.filter(contact => contact.id !== contactId));
         } else {
             contactDiv.classList.add("participant");
-            console.log(contactDiv.classList);
             setGroupParticipants(prev => [...prev, contact]);
         }
     }
 
-
-    const { contacts, setContacts } = useContacts();
-    
     let contactNameInitial = "";
 
     function addNameInitial(contactName) {
@@ -71,7 +71,7 @@ const NewGroup = ({ showNewGroup, setShowNewGroup, setShowAddContact }) => {
         return null;
     }
 
-    function searchContacts(e) {
+    function searchParticipants(e) {
         document.querySelectorAll(".contact-name-initial").forEach(initial => {
             if (e.target.value === "") {
                 initial.style.display = "flex";
@@ -94,52 +94,98 @@ const NewGroup = ({ showNewGroup, setShowNewGroup, setShowAddContact }) => {
         })
     }
 
+    function createNewGroup() {
+        const conversationName = document.getElementById("new-group-name").value;
+        const groupNameHelp = document.getElementById("new-group-help-name");
+        const lastMessageTime = new Date().toLocaleTimeString([], { hour: "numeric", minute: "numeric", hour12: true }).toLowerCase();
+        const lastMessage = `You created group "${conversationName}"`;
+        const unseenMessages = 1;
+        setConversations(prev => [...prev, { id: conversations.length + 1, conversationName, lastMessageTime, lastMessage, unseenMessages }])
+        groupParticipants.map(participant => {
+            const contactDiv = document.getElementById(`new-group-${participant.id}`);
+            contactDiv.classList.remove("participant");
+        })
+        setShowNewGroup(false);
+        setShowAddConversation(false);
+        setGroupParticipants([]);
+        setShowNewGroupModal(false);
+    }
+
     return (
-        <div className={'new-group-div' + (showNewGroup ? " show" : "")}>
-            <div className="sidebar-header">
-                <div className="actions">
-                    <IoArrowBack onClick={() => setShowNewGroup(false)} />
-                    <span>
-                        Create New Group
-                    </span>
+        <>
+            <div className={'new-group-div' + (showNewGroup ? " show" : "")}>
+                <div className="sidebar-header">
+                    <div className="actions">
+                        <IoArrowBack onClick={() => setShowNewGroup(false)} />
+                        <span>
+                            Create New Group
+                        </span>
+                    </div>
+                    {
+                        groupParticipants.length > 0 ?
+                            <button type="button" className="btn btn-border new-group-btn" onClick={() => setShowNewGroupModal(true)}>
+                                Create
+                            </button>
+                            : null
+                    }
                 </div>
-            </div>
-            <div className="sidebar-body">
-                <div className='conversation-search-wrapper'>
-                    <AiOutlineSearch className='search-icon' />
-                    <input type="text" placeholder='Search Participants' onChange={searchContacts} />
-                </div>
-                {
-                    contacts.length > 0 ?
-                        contacts.sort((a, b) => a.contactName.localeCompare(b.contactName))
-                            .map(contact => {
-                                return (
-                                    <React.Fragment key={contact.id} >
-                                        {addNameInitial(contact.contactName)}
-                                        <div id={`new-group-${contact.id}`} onClick={() => addGroupParticipants(contact)}>
-                                            <div className="user-wrapper">
-                                                <div className="user">
-                                                    <FaUser className="user-img" />
+                <div className="sidebar-body">
+                    <div className='conversation-search-wrapper'>
+                        <AiOutlineSearch className='search-icon' />
+                        <input type="text" placeholder='Search Participants' onChange={searchParticipants} />
+                    </div>
+                    {
+                        contacts.length > 0 ?
+                            contacts.sort((a, b) => a.contactName.localeCompare(b.contactName))
+                                .map(contact => {
+                                    return (
+                                        <React.Fragment key={contact.id} >
+                                            {addNameInitial(contact.contactName)}
+                                            <div id={`new-group-${contact.id}`} onClick={() => addGroupParticipants(contact)}>
+                                                <div className="user-wrapper">
+                                                    <div className="user">
+                                                        <FaUser className="user-img" />
+                                                    </div>
+                                                </div>
+                                                <div className="about-user-wrapper">
+                                                    <h3 className='contact-name'>{contact.contactName}</h3>
+                                                    <p className='about-user'>{contact.aboutUser}</p>
                                                 </div>
                                             </div>
-                                            <div className="about-user-wrapper">
-                                                <h3 className='contact-name'>{contact.contactName}</h3>
-                                                <p className='about-user'>{contact.aboutUser}</p>
-                                            </div>
-                                        </div>
-                                    </React.Fragment>
-                                )
-                            }) :
-                        <div className="no-contacts">
-                            <p>You have no contacts</p>
-                            <div className="btn" onClick={() => setShowAddContact(true)}>
-                                Add Contact
+                                        </React.Fragment>
+                                    )
+                                }) :
+                            <div className="no-contacts">
+                                <p>You have no contacts</p>
+                                <div className="btn" onClick={() => setShowAddContact(true)}>
+                                    Add Contact
+                                </div>
                             </div>
-                        </div>
-                }
+                    }
 
+                </div>
             </div>
-        </div>
+            <div className={"new-group-modal-bg" + (showNewGroupModal ? " show" : "")}>
+                <div className="new-group-modal">
+                    <div className="new-group-modal-header">
+                        New Group
+                    </div>
+                    <div className="new-group-modal-body">
+                        <div className='form-group-wrapper'>
+                            <div className="contact-name-div form-group">
+                                <input type="text" name="new-group-name" id="new-group-name" style={{ width: "100%" }} placeholder=' ' autoComplete="no" />
+                                <label htmlFor="new-group-name">Group Name</label>
+                            </div>
+                            <small id="new-group-help-name" className='new-group-help-text' style={{ display: "none" }}>Enter your email</small>
+                        </div>
+                        <div className="new-group-modal-btn-wrapper">
+                            <button className="btn btn-border" onClick={() => setShowNewGroupModal(false)}>Close</button>
+                            <button className="btn" onClick={createNewGroup}>Create</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </>
     )
 }
 

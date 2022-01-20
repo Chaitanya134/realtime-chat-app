@@ -1,4 +1,7 @@
 .chat-div {
+    @include flex($col: true);
+    align-items: initial;
+
     .no-conversation {
         @include flex();
         height: 100%;
@@ -14,13 +17,14 @@
     color: white;
 
     .conversation-wrapper {
-        @include flex($gap: 1rem);
+        @include flex($pos: flex-start, $gap: 1rem);
+        flex-grow: 1;
         height: 100%;
 
         .conversation-name-wrapper {
             @include flex($col: true);
             align-items: flex-start;
-        
+
             .conversation-name {
                 font-size: 1.4rem;
                 font-weight: 500;
@@ -57,5 +61,55 @@
             cursor: pointer;
             color: white;
         }
+    }
+}
+
+.chat-div-body {
+    @include flex($pos: null, $gap: 1rem, $col: true);
+    height: calc(100% - 20%);
+    padding: 2rem;
+    overflow: auto;
+
+    .message {
+        align-self: flex-start;
+        width: fit-content;
+        padding: 0.5rem 1rem;
+        border-radius: 0.5rem;
+        background: $selection-color;
+        font-weight: 400;
+
+        &.your-message {
+            background: $secondary-color;
+            align-self: flex-end;
+        }
+
+    }
+}
+
+.chat-div-footer {
+    @include flex($gap: 1.5rem);
+    height: 10%;
+    background: $primary-color;
+
+    input {
+        height: 60%;
+        width: 80%;
+        padding: 0 1.5rem;
+        font-size: 1.2rem;
+        border: none;
+        border-radius: 100vw;
+        outline: none;
+
+        &:not(:placeholder-shown)+.send-btn {
+            color: white;
+            cursor: pointer;
+            pointer-events: auto;
+        }
+    }
+
+    .send-btn {
+        font-size: 1.5rem;
+        color: $secondary-color;
+        pointer-events: none;
     }
 }

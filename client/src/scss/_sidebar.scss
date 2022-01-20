@@ -245,6 +245,17 @@
         }
     }
 
+    .new-group-btn {
+        border-radius: 0.5rem;
+        transition: 0.3s ease-in-out;
+
+        &:hover {
+            box-shadow: 0 0 0 2px white inset;
+            color: white;
+            background: $primary-color;
+        }
+    }
+
     .group-img {
         font-size: 2.5rem;
         color: white;
@@ -280,24 +291,28 @@
     }
 }
 
-.add-contact-div {
+.add-contact-div,
+.new-group-modal-bg {
     display: none;
     position: fixed;
     inset: 0;
     background: rgba(0, 0, 0, 0.4);
+    z-index: 1;
 
     &.show {
         @include flex;
     }
 
-    .add-contact-wrapper {
+    .add-contact-wrapper,
+    .new-group-modal {
         background: white;
         height: fit-content;
         width: 30%;
         border-radius: 10px;
         box-shadow: 0 0 10px 2px #cdcdcd;
 
-        .add-contact-header {
+        .add-contact-header,
+        .new-group-modal-header {
             @include flex($pos: null);
             padding: 1.5rem;
             height: 60px;
@@ -305,7 +320,8 @@
             border-bottom: 1px solid #ccc;
         }
 
-        .add-contact-body {
+        .add-contact-body,
+        .new-group-modal-body {
             padding: 1rem 1.5rem;
 
             .form-group-wrapper {
@@ -373,14 +389,16 @@
                 width: 48%;
             }
 
-            .add-contact-help-text {
+            .add-contact-help-text,
+            .new-group-help-text {
                 margin-top: 0.4rem;
                 color: red;
             }
 
         }
 
-        .add-contact-btn-wrapper {
+        .add-contact-btn-wrapper,
+        .new-group-modal-btn-wrapper {
             @include flex($pos: flex-end, $gap: 1rem);
         }
     }

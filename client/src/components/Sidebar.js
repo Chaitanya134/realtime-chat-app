@@ -15,52 +15,52 @@ const Sidebar = () => {
     const [showNewGroup, setShowNewGroup] = useState(false);
     const [showAddContact, setShowAddContact] = useState(false);
 
-    const { setConversation } = useConversations();
+    const { conversations, setConversation } = useConversations();
 
-    let conversations = [
-        {
-            id: 1,
-            conversationName: "Chaitanya",
-            lastMessageTime: "9:30 pm",
-            lastMessage: "hello my name is Chaitanya",
-            unseenMessages: 2
-        },
-        {
-            id: 2,
-            conversationName: "Chaitanya",
-            lastMessageTime: "9:30 pm",
-            lastMessage: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae sequi nostrum quasi laudantium modi dolore! Reprehenderit neque rem, esse sequi impedit doloribus quasi blanditiis facere sit exercitationem veniam, quos labore, minus necessitatibus incidunt et expedita dignissimos nisi tempora tempore iusto quaerat. Consectetur fuga eum laudantium soluta. Ducimus nesciunt repellendus dicta.",
-            unseenMessages: 2
-        },
-        {
-            id: 3,
-            conversationName: "Chaitanya",
-            lastMessageTime: "9:30 pm",
-            lastMessage: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae sequi nostrum quasi laudantium modi dolore! Reprehenderit neque rem, esse sequi impedit doloribus quasi blanditiis facere sit exercitationem veniam, quos labore, minus necessitatibus incidunt et expedita dignissimos nisi tempora tempore iusto quaerat. Consectetur fuga eum laudantium soluta. Ducimus nesciunt repellendus dicta.",
-            unseenMessages: 2
-        },
-        {
-            id: 4,
-            conversationName: "Chaitanya",
-            lastMessageTime: "9:30 pm",
-            lastMessage: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae sequi nostrum quasi laudantium modi dolore! Reprehenderit neque rem, esse sequi impedit doloribus quasi blanditiis facere sit exercitationem veniam, quos labore, minus necessitatibus incidunt et expedita dignissimos nisi tempora tempore iusto quaerat. Consectetur fuga eum laudantium soluta. Ducimus nesciunt repellendus dicta.",
-            unseenMessages: 1000
-        },
-        {
-            id: 5,
-            conversationName: "Chaitanya",
-            lastMessageTime: "9:30 pm",
-            lastMessage: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae sequi nostrum quasi laudantium modi dolore! Reprehenderit neque rem, esse sequi impedit doloribus quasi blanditiis facere sit exercitationem veniam, quos labore, minus necessitatibus incidunt et expedita dignissimos nisi tempora tempore iusto quaerat. Consectetur fuga eum laudantium soluta. Ducimus nesciunt repellendus dicta.",
-            unseenMessages: 100
-        },
-        {
-            id: 6,
-            conversationName: "Chaitanya",
-            lastMessageTime: "9:30 pm",
-            lastMessage: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae sequi nostrum quasi laudantium modi dolore! Reprehenderit neque rem, esse sequi impedit doloribus quasi blanditiis facere sit exercitationem veniam, quos labore, minus necessitatibus incidunt et expedita dignissimos nisi tempora tempore iusto quaerat. Consectetur fuga eum laudantium soluta. Ducimus nesciunt repellendus dicta.",
-            unseenMessages: 10
-        },
-    ];
+    // let conversations = [
+    //     {
+    //         id: 1,
+    //         conversationName: "Chaitanya",
+    //         lastMessageTime: "9:30 pm",
+    //         lastMessage: "hello my name is Chaitanya",
+    //         unseenMessages: 2
+    //     },
+    //     {
+    //         id: 2,
+    //         conversationName: "Chaitanya",
+    //         lastMessageTime: "9:30 pm",
+    //         lastMessage: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae sequi nostrum quasi laudantium modi dolore! Reprehenderit neque rem, esse sequi impedit doloribus quasi blanditiis facere sit exercitationem veniam, quos labore, minus necessitatibus incidunt et expedita dignissimos nisi tempora tempore iusto quaerat. Consectetur fuga eum laudantium soluta. Ducimus nesciunt repellendus dicta.",
+    //         unseenMessages: 2
+    //     },
+    //     {
+    //         id: 3,
+    //         conversationName: "Chaitanya",
+    //         lastMessageTime: "9:30 pm",
+    //         lastMessage: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae sequi nostrum quasi laudantium modi dolore! Reprehenderit neque rem, esse sequi impedit doloribus quasi blanditiis facere sit exercitationem veniam, quos labore, minus necessitatibus incidunt et expedita dignissimos nisi tempora tempore iusto quaerat. Consectetur fuga eum laudantium soluta. Ducimus nesciunt repellendus dicta.",
+    //         unseenMessages: 2
+    //     },
+    //     {
+    //         id: 4,
+    //         conversationName: "Chaitanya",
+    //         lastMessageTime: "9:30 pm",
+    //         lastMessage: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae sequi nostrum quasi laudantium modi dolore! Reprehenderit neque rem, esse sequi impedit doloribus quasi blanditiis facere sit exercitationem veniam, quos labore, minus necessitatibus incidunt et expedita dignissimos nisi tempora tempore iusto quaerat. Consectetur fuga eum laudantium soluta. Ducimus nesciunt repellendus dicta.",
+    //         unseenMessages: 1000
+    //     },
+    //     {
+    //         id: 5,
+    //         conversationName: "Chaitanya",
+    //         lastMessageTime: "9:30 pm",
+    //         lastMessage: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae sequi nostrum quasi laudantium modi dolore! Reprehenderit neque rem, esse sequi impedit doloribus quasi blanditiis facere sit exercitationem veniam, quos labore, minus necessitatibus incidunt et expedita dignissimos nisi tempora tempore iusto quaerat. Consectetur fuga eum laudantium soluta. Ducimus nesciunt repellendus dicta.",
+    //         unseenMessages: 100
+    //     },
+    //     {
+    //         id: 6,
+    //         conversationName: "Chaitanya",
+    //         lastMessageTime: "9:30 pm",
+    //         lastMessage: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae sequi nostrum quasi laudantium modi dolore! Reprehenderit neque rem, esse sequi impedit doloribus quasi blanditiis facere sit exercitationem veniam, quos labore, minus necessitatibus incidunt et expedita dignissimos nisi tempora tempore iusto quaerat. Consectetur fuga eum laudantium soluta. Ducimus nesciunt repellendus dicta.",
+    //         unseenMessages: 10
+    //     },
+    // ];
 
     // conversations = [];
     const navigate = useNavigate();
@@ -137,6 +137,7 @@ const Sidebar = () => {
                 showNewGroup={showNewGroup}
                 setShowNewGroup={setShowNewGroup}
                 setShowAddContact={setShowAddContact}
+                setShowAddConversation={setShowAddConversation}
             />
             <AddContact showAddContact={showAddContact} setShowAddContact={setShowAddContact} />
         </div>
