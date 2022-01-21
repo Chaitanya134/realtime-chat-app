@@ -1,11 +1,22 @@
 const app = require("./app");
-const connectDatabase = require("./config/database");
+const http = require("http");
+const server = http.createServer(app);
 
-const { PORT, HOST, USER, PASSWORD, DATABASE } = process.env;
+const { PORT, CLIENT_URL, HOST, USER, PASSWORD, DATABASE } = process.env;
+
+exports.io = require("socket.io")(server, {
+    cors: {
+        origin: [CLIENT_URL]
+    }
+});
+
+require("./socket");
+
+const connectDatabase = require("./config/database");
 
 // Connecting to database
 connectDatabase();
 
-app.listen(PORT, () => {
+server.listen(PORT, () => {
     console.log(`SERVER RUNNING ON PORT ${PORT}`);
 })

@@ -65,18 +65,32 @@
 }
 
 .chat-div-body {
-    @include flex($pos: null, $gap: 1rem, $col: true);
+    @include flex($pos: null, $gap: 0.5rem, $col: true);
     height: calc(100% - 20%);
-    padding: 2rem;
-    overflow: auto;
+    padding: 1.5rem;
+    overflow-y: auto;
+
+    &::-webkit-scrollbar {
+        width: 0.5rem;
+    }
+
+    &::-webkit-scrollbar-track {
+        background: $secondary-color;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background: $primary-color;
+        border-radius: 100vh;
+    }
 
     .message {
         align-self: flex-start;
-        width: fit-content;
+        max-width: 40%;
         padding: 0.5rem 1rem;
         border-radius: 0.5rem;
         background: $selection-color;
-        font-weight: 400;
+        word-break: break-all;
+        white-space: normal;
 
         &.your-message {
             background: $secondary-color;
