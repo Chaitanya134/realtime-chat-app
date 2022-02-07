@@ -1,5 +1,5 @@
 const express = require("express");
-const { getAllUsers, createUser, updateUser, getUserById, loginUser } = require("../controllers/userController");
+const { getAllUsers, createUser, updateUser, getUserById, loginUser, addAContact, getAllContacts } = require("../controllers/userController");
 
 const router = express.Router();
 
@@ -17,5 +17,11 @@ router.route("/user/:id").put(updateUser);
 
 // Login User
 router.route("/user/login").post(loginUser);
+
+// Get All Contacts
+router.route("/user/:id/contacts").get(getAllContacts);
+
+// Add a Contact
+router.route("/user/:id/contact").post(addAContact);
 
 module.exports = router;

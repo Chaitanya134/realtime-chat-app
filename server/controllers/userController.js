@@ -87,3 +87,52 @@ exports.loginUser = async (req, res) => {
         console.log(err);
     }
 }
+
+// Get all Contacts
+exports.getAllContacts = async (req, res) => {
+    const user = await User.findById(req.params.id);
+    if (!user) {
+        return res.status(500).json({
+            success: false,
+            message: "User not found"
+        })
+    }
+
+    res.status(200).json({
+        success: true,
+        contacts: user.savedContacts
+    })
+}
+
+// Add a Contact
+exports.addAContact = async (req, res) => {
+    try {
+        const user = await User.findById(req.params.id);
+
+        if (!user) {
+            return res.status(500).json({
+                success: false,
+                message: "User not found"
+            })
+        }
+
+        const contact = await User.findOne({ email: req.body.email });
+
+        if (!contact) {
+            return res.status(500).json({
+                success: false,
+                message: "Contact not found"
+            })
+        }
+
+        user.savedContacts.push({ contactId: contact._id, contactName: req.body.contactName });
+        await user.save();
+
+        res.status(200).json({
+            success: true,
+            contact
+        })
+    } catch (err) {
+        console.log(err);
+    }
+}

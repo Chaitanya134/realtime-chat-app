@@ -1,27 +1,16 @@
-import React, { useRef } from 'react'
-import { icons } from 'react-icons/lib';
-import { useContacts } from '../contexts/ContactProvider'
+import React from 'react'
+import { useContacts } from "../contexts/ContactProvider";
 
 const AddContact = ({ showAddContact, setShowAddContact }) => {
 
-    const { contacts, setContacts } = useContacts();
-    const id = useRef(100);
+    const { addContact } = useContacts();
 
-    function addContact() {
+    function handleAddContact() {
         const email = document.getElementById("add-contact-email").value;
-        const contactExists = contacts.find(contact => contact.email === email);
-        if (contactExists) {
-            document.getElementById("add-contact-help-email").style.display = "block";
-            return
-        } else {
-            document.getElementById("add-contact-help-email").style.display = "none";
-        }
-
-        id.current = id.current + 1;
         const contactName = document.getElementById("add-contact-name").value;
-        const aboutUser = "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Iste, quibusdam?";
-        setContacts(prev => [...prev, { id: id.current, contactName, email, aboutUser }]);
-        setShowAddContact(false);
+        const helpText = document.getElementById("add-contact-help-email");
+
+        addContact(email, contactName, helpText, setShowAddContact);
     }
 
     return (
@@ -45,7 +34,7 @@ const AddContact = ({ showAddContact, setShowAddContact }) => {
                     </div>
                     <div className="add-contact-btn-wrapper">
                         <button type="button" className="btn btn-border" onClick={() => setShowAddContact(false)}>Close</button>
-                        <button type="button" className="btn" onClick={addContact}>Add</button>
+                        <button type="button" className="btn" onClick={handleAddContact}>Add</button>
                     </div>
                 </div>
             </div>

@@ -23,11 +23,24 @@ const userSchema = mongoose.Schema({
         type: String,
         required: [true, "Please enter password"]
     },
+    bio: {
+        type: String,
+        default: "Hey! I'm a new user"
+    }
+    ,
     createdAt: {
         type: Date,
         default: Date.now()
     },
     savedContacts: {
+        type: Array,
+        default: []
+    },
+    lastActive: {
+        type: Date,
+        default: Date.now()
+    },
+    conversations: {
         type: Array,
         default: []
     }

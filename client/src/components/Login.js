@@ -1,9 +1,11 @@
 import React from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom';
+import { useUser } from '../contexts/UserProvider';
 
 const Login = ({ setRegistered }) => {
 
+    const { setUser } = useUser();
     const navigate = useNavigate();
 
     async function login() {
@@ -17,6 +19,7 @@ const Login = ({ setRegistered }) => {
 
             const response = await axios.post(process.env.REACT_APP_API_URL + "user/login", body);
             console.log(response);
+            setUser(response.data.user);
             return true;
         } catch (err) {
             console.log(err);
