@@ -15,8 +15,9 @@ app.use(express.json());
 
 // Route imports
 const user = require("./routes/userRoute");
+const conversation = require("./routes/conversationRoute");
 
 app.use("/api/v1", user);
-
+app.use("/api/v1", conversation);
 
 module.exports = app;

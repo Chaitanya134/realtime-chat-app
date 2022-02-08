@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { FaUser } from "react-icons/fa"
 import { IoArrowBack } from "react-icons/io5"
 import { AiOutlineSearch } from "react-icons/ai"
 import { useContacts } from '../contexts/ContactProvider'
 import { useConversations } from '../contexts/ConversationProvider'
+import axios from 'axios'
 
 const NewGroup = ({ showNewGroup, setShowNewGroup, setShowAddContact, setShowAddConversation }) => {
 
@@ -42,15 +43,15 @@ const NewGroup = ({ showNewGroup, setShowNewGroup, setShowAddContact, setShowAdd
 
     const [groupParticipants, setGroupParticipants] = useState([]);
     const [showNewGroupModal, setShowNewGroupModal] = useState(false);
-    const { contacts, setContacts } = useContacts();
+    const { contacts } = useContacts();
     const { conversations, setConversations } = useConversations();
 
     function addGroupParticipants(contact) {
-        const { id: contactId } = contact;
+        const { _id: contactId } = contact;
         const contactDiv = document.getElementById(`new-group-${contactId}`);
-        if (groupParticipants.find(contact => contact.id === contactId)) {
+        if (groupParticipants.find(contact => contact._id === contactId)) {
             contactDiv.classList.remove("participant");
-            setGroupParticipants(groupParticipants.filter(contact => contact.id !== contactId));
+            setGroupParticipants(groupParticipants.filter(contact => contact._id !== contactId));
         } else {
             contactDiv.classList.add("participant");
             setGroupParticipants(prev => [...prev, contact]);
@@ -94,21 +95,42 @@ const NewGroup = ({ showNewGroup, setShowNewGroup, setShowAddContact, setShowAdd
         })
     }
 
-    function createNewGroup() {
+    async function createNewGroup() {
         const conversationName = document.getElementById("new-group-name").value;
         const groupNameHelp = document.getElementById("new-group-help-name");
         const lastMessageTime = new Date().toLocaleTimeString([], { hour: "numeric", minute: "numeric", hour12: true }).toLowerCase();
         const lastMessage = `You created group "${conversationName}"`;
         const unseenMessages = 1;
-        setConversations(prev => [...prev, { id: conversations.length + 1, conversationName, lastMessageTime, lastMessage, unseenMessages }])
-        groupParticipants.map(participant => {
-            const contactDiv = document.getElementById(`new-group-${participant.id}`);
-            contactDiv.classList.remove("participant");
-        })
-        setShowNewGroup(false);
-        setShowAddConversation(false);
-        setGroupParticipants([]);
-        setShowNewGroupModal(false);
+
+        if (conversationName === "") {
+            groupNameHelp.innerText = "Please enter a group name";
+            groupNameHelp.style.display = "block";
+            return;
+        } else {
+            groupNameHelp.style.display = "none";
+        }
+
+        const participants = groupParticipants.map(participant => participant._id)
+        try {
+            const userId = sessionStorage.getItem("realtime-chat-app-id");
+            const response = await axios.post(`${process.env.REACT_APP_API_URL}/conversation/new`, { conversationName, private: false, participants: [ userId, ...participants ] });
+            console.log(response);
+            const conversation = response.data.conversation;
+
+            if (response.data.success) {
+                setConversations(prev => [...prev, { _id: conversation._id, conversationName, lastMessageTime, lastMessage, unseenMessages }])
+                groupParticipants.map(participant => {
+                    const contactDiv = document.getElementById(`new-group-${participant._id}`);
+                    contactDiv.classList.remove("participant");
+                })
+                setShowNewGroup(false);
+                setShowAddConversation(false);
+                setGroupParticipants([]);
+                setShowNewGroupModal(false);
+            }
+        } catch (err) {
+            console.log(err);
+        }
     }
 
     return (
@@ -141,7 +163,7 @@ const NewGroup = ({ showNewGroup, setShowNewGroup, setShowAddContact, setShowAdd
                                     return (
                                         <React.Fragment key={contact._id} >
                                             {addNameInitial(contact.contactName)}
-                                            <div id={`new-group-${contact.id}`} onClick={() => addGroupParticipants(contact)}>
+                                            <div id={`new-group-${contact._id}`} onClick={() => addGroupParticipants(contact)}>
                                                 <div className="user-wrapper">
                                                     <div className="user">
                                                         <FaUser className="user-img" />

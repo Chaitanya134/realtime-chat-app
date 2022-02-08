@@ -26,6 +26,7 @@ const Main = () => {
             const userId = sessionStorage.getItem('realtime-chat-app-id');
             getUserById(userId).then(user => {
                 setUser(user);
+                console.log(user);
             }).catch(err => {
                 console.log(err);
             });

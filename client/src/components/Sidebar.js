@@ -99,7 +99,7 @@ const Sidebar = () => {
                 {
                     conversations.length > 0 ?
                         conversations.map(conversation => (
-                            <div key={conversation.id} onClick={() => setConversation(conversation)}>
+                            <div key={conversation._id} onClick={() => setConversation(conversation)}>
                                 <div className="user-wrapper">
                                     <div className="user">
                                         <FaUser className="user-img" />
