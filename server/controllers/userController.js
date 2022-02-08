@@ -107,6 +107,7 @@ exports.getAllContacts = async (req, res) => {
 // Add a Contact
 exports.addAContact = async (req, res) => {
     try {
+        const { email, contactName } = req.body;
         const user = await User.findById(req.params.id);
 
         if (!user) {
@@ -116,7 +117,7 @@ exports.addAContact = async (req, res) => {
             })
         }
 
-        const contact = await User.findOne({ email: req.body.email });
+        const contact = await User.findOne({ email });
 
         if (!contact) {
             return res.status(500).json({
@@ -125,7 +126,9 @@ exports.addAContact = async (req, res) => {
             })
         }
 
-        user.savedContacts.push({ contactId: contact._id, contactName: req.body.contactName });
+        const bio = contact?.bio ?? "Hey! I'm a new user";
+
+        user.savedContacts.push({ _id: contact._id, contactName, email, bio });
         await user.save();
 
         res.status(200).json({

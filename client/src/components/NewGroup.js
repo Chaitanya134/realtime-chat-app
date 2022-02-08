@@ -139,7 +139,7 @@ const NewGroup = ({ showNewGroup, setShowNewGroup, setShowAddContact, setShowAdd
                             contacts.sort((a, b) => a.contactName.localeCompare(b.contactName))
                                 .map(contact => {
                                     return (
-                                        <React.Fragment key={contact.id} >
+                                        <React.Fragment key={contact._id} >
                                             {addNameInitial(contact.contactName)}
                                             <div id={`new-group-${contact.id}`} onClick={() => addGroupParticipants(contact)}>
                                                 <div className="user-wrapper">
@@ -149,7 +149,7 @@ const NewGroup = ({ showNewGroup, setShowNewGroup, setShowAddContact, setShowAdd
                                                 </div>
                                                 <div className="about-user-wrapper">
                                                     <h3 className='contact-name'>{contact.contactName}</h3>
-                                                    <p className='about-user'>{contact.aboutUser}</p>
+                                                    <p className='about-user'>{contact.bio}</p>
                                                 </div>
                                             </div>
                                         </React.Fragment>

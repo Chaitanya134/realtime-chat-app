@@ -3,10 +3,16 @@ import { FaUser } from 'react-icons/fa'
 import { IoEllipsisVertical, IoSendSharp } from "react-icons/io5"
 import { useConversations } from '../contexts/ConversationProvider'
 import io from "socket.io-client"
+import axios from 'axios'
 
 const socket = io(process.env.REACT_APP_API_URL.replace("/api/v1", ""));
 socket.on("connect", () => {
     console.log("connected");
+
+    setInterval(async () => {
+        const userId = sessionStorage.getItem("realtime-chat-app-id");
+        await axios.put(`${process.env.REACT_APP_API_URL}user/${userId}`, { lastActive: new Date() });
+    }, 5 * 60 * 1000);
 })
 
 const Chat = () => {

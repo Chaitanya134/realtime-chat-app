@@ -17,7 +17,7 @@ const ContactProvider = ({ children }) => {
         if (user.savedContacts) {
             setContacts(user.savedContacts)
         }
-    }, []);
+    }, [user]);
 
     async function addContact(email, contactName, helpText, setShowAddContact) {
         const contactExists = contacts.find(contact => contact.email === email);
@@ -34,7 +34,7 @@ const ContactProvider = ({ children }) => {
             const response = await axios.post(`${process.env.REACT_APP_API_URL}user/${user._id}/contact`, { email, contactName })
             const contact = response.data.contact;
 
-            setContacts(prev => [...prev, { id: contact._id, contactName, email, aboutUser: contact.bio }]);
+            setContacts(prev => [...prev, { _id: contact._id, contactName, email, bio: contact.bio }]);
             console.log(contact);
         } catch (err) {
             console.log(err);

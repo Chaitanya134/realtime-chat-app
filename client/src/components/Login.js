@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom';
 import { useUser } from '../contexts/UserProvider';
@@ -7,6 +7,28 @@ const Login = ({ setRegistered }) => {
 
     const { setUser } = useUser();
     const navigate = useNavigate();
+
+    async function getUserById(id) {
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}user/${id}`);
+        const user = response.data.user;
+        return user;
+    }
+
+    // if user is already logged in, redirect to /chat
+    useEffect(() => {
+        if (sessionStorage.getItem('realtime-chat-app-id')) {
+            const userId = sessionStorage.getItem('realtime-chat-app-id');
+
+            getUserById(userId).then(user => {
+                console.log(user);
+                setUser(user);
+            }).catch(err => {
+                console.log(err);
+            });
+
+            navigate('/chat');
+        }
+    }, []);
 
     async function login() {
         try {
@@ -20,6 +42,9 @@ const Login = ({ setRegistered }) => {
             const response = await axios.post(process.env.REACT_APP_API_URL + "user/login", body);
             console.log(response);
             setUser(response.data.user);
+
+            sessionStorage.setItem('realtime-chat-app-id', response.data.user._id);
+
             return true;
         } catch (err) {
             console.log(err);
